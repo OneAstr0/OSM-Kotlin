@@ -9,6 +9,9 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.ItemizedIconOverlay
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus
+import org.osmdroid.views.overlay.OverlayItem
 
 class MainActivity : AppCompatActivity() {
     private lateinit var currentco: TextView
@@ -47,6 +50,28 @@ class MainActivity : AppCompatActivity() {
         // Получение и сохранение текущей координаты камеры
         /*currentCameraPosition = mapView.x as GeoPoint
         currentco.setText(currentCameraPosition.toString())*/
+
+        // Создание меток на карте
+
+        //val map_marker_normal = R.drawable.map_marker_normal
+        //val map_marker_selected = R.drawable.map_marker_selected
+
+        val items = ArrayList<OverlayItem>()
+        items.add(OverlayItem("Point 1", "Description for Point 1", GeoPoint(60.0071, 30.3720)))
+
+        val mOverlay = ItemizedOverlayWithFocus<OverlayItem>(items,
+            object : ItemizedIconOverlay.OnItemGestureListener<OverlayItem> {
+                override fun onItemSingleTapUp(index: Int, item: OverlayItem): Boolean {
+                    return true
+                }
+
+                override fun onItemLongPress(index: Int, item: OverlayItem): Boolean {
+                    return false
+                }
+            }, applicationContext)
+
+        mOverlay.setFocusItemsOnTap(true)
+        mapView.overlays.add(mOverlay)
     }
 
     override fun onResume() {
@@ -59,3 +84,4 @@ class MainActivity : AppCompatActivity() {
         mapView.onPause()
     }
 }
+
