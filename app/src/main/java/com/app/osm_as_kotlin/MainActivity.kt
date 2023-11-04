@@ -24,13 +24,13 @@ class MainActivity : AppCompatActivity() {
         currentco = findViewById(R.id.realtime_coordinates)
         // Инициализация карты
         mapView = findViewById(R.id.mapView)
-        mapView.setTileSource(TileSourceFactory.MAPNIK)
         mapView.setBuiltInZoomControls(false) // Отключил кнопки масштабирования
 
         // Стартовая точка
         val mapController: IMapController = mapView.controller
         mapController.setZoom(17.0)
-        mapController.setCenter(GeoPoint(60.0071, 30.3720))
+        var startpoint: GeoPoint = GeoPoint(60.0071, 30.3720)
+        mapController.setCenter(startpoint)
 
         mapView.setMultiTouchControls(true)
 
